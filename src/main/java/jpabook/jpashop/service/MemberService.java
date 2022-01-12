@@ -12,13 +12,17 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MemberService {
 
-    @Autowired
-    MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     /**
      * 회원가입
      */
 
+    @Transactional
     public Long join(Member member){
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
